@@ -3,10 +3,7 @@ function safeloadstring(url)
         return game:HttpGet(url)
     end)
     local func, errorMessage = loadstring(success and code or "")
-    if func then
-        print("Script compiled! Executing...")
-        return func()
-    else
+    if not func then
         warn("LOADSTRING FAILED: " .. tostring(errorMessage))
         return nil
     end
