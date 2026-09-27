@@ -1,6 +1,8 @@
 function safeloadstring(url)
-    local code = game:HttpGet(url)
-    local func, errorMessage = loadstring(code)
+    local success, code = pcall(function()
+        return game:HttpGet(url)
+    end)
+    local func, errorMessage = loadstring(success and code or "")
     if func then
         print("Script compiled! Executing...")
         return func()
@@ -10,7 +12,7 @@ function safeloadstring(url)
     end
 end
 
-local Fluent = safeloadstring("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua")
+local Fluent = safeloadstring("https://github.com/dawid-scripts/Fluent/releases/download/1.1.0/main.lua")
 local SaveManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua")
 local InterfaceManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua")
 
