@@ -9,6 +9,7 @@ local Window = Fluent:CreateWindow({
     TabWidth = 160,
     Size = UDim2.fromOffset(480, 400),
     Acrylic = false,
+    Transparency = 0,
     Theme = "Orange",
     MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
 })
@@ -32,9 +33,9 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(0)
 
 Fluent:Notify({
-    Title = "Fluent",
+    Title = "Success",
     Content = "The script has been loaded.",
-    Duration = 8
+    Duration = 3
 })
 
 SaveManager:LoadAutoloadConfig()
