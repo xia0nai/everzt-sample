@@ -10,9 +10,9 @@ function safeloadstring(url)
     end
 end
 
-local Fluent = safeloadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = safeloadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = safeloadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local Fluent = safeloadstring("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua")
+local SaveManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua")
+local InterfaceManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua")
 
 local Window = Fluent:CreateWindow({
     Title = "Everzt Hub",
