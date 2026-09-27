@@ -3,7 +3,9 @@ function safeloadstring(url)
         return game:HttpGet(url)
     end)
     local func, errorMessage = loadstring(success)
-    if not func then
+    if func then
+        return funct()
+    else
         warn("LOADSTRING FAILED: " .. tostring(errorMessage))
         return nil
     end
@@ -17,13 +19,12 @@ local Window = Fluent:CreateWindow({
     Title = "Everzt Hub",
     SubTitle = "by xia0nai",
     TabWidth = 160,
-    Size = UDim2.fromOffset(480, 400),
+    Size = UDim2.fromOffset(580, 460),
     Acrylic = false,
     Theme = "Orange",
-    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+    MinimizeKey = Enum.KeyCode.LeftControl,
 })
 
---Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({ Title = "Main", Icon = "home" }),
     Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
