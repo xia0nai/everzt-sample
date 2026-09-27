@@ -9,7 +9,7 @@ function safeloadstring(url)
     end
 end
 
-local Fluent = safeloadstring("https://github.com/dawid-scripts/Fluent/releases/download/1.1.0/main.lua")
+local Fluent = safeloadstring("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua")
 local SaveManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua")
 local InterfaceManager = safeloadstring("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua")
 
