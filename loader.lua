@@ -15,9 +15,32 @@ local Window = Fluent:CreateWindow({
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Misc = Window:AddTab({ Title = "Misc", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "" })
 }
+
+function Notify(title, content, duration)
+    Fluent:Notify({
+        Title = title,
+        Content = content,
+        Duration = duration or 3
+    })
+end
+
+-- / Misc Tab / --
+do
+    local GameplaySection = Tabs.Misc:AddSection("Gameplay")
+
+    local Toggle = GameplaySection:AddToggle("Anti-AFK", {
+        Title = "Anti-AFK",
+        Default = true,
+        Callback = function(state)
+            Notify("Misc", "Anti-AFK is now " .. (state and "enabled" or "disabled"))
+        end
+    })
+end
+-- / Settings Tab / --
 
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
