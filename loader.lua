@@ -1,10 +1,8 @@
 function safeloadstring(url)
-    local success, code = pcall(function()
-        return game:HttpGet(url)
-    end)
-    local func, errorMessage = loadstring(success)
+    local code = game:HttpGet(url)
+    local func, errorMessage = loadstring(code)
     if func then
-        return funct()
+        return func()
     else
         warn("LOADSTRING FAILED: " .. tostring(errorMessage))
         return nil
