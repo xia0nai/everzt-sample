@@ -95,15 +95,55 @@ end
 
 -- / Miscellaneous Tab / --
 do
+    local AntiAFK = {}
+    AntiAFK.Enabled = false
+    AntiAFK.IdleThreshold = 15 * 60
+    local lastInput = tick()
+    local heartbeatConn = nil
+    local inputConns = {}
+    local function resetTimer()
+        lastInput = tick()
+    end
+
+    function AntiAFK.Toggle(state)
+        AntiAFK.Enabled = state
+        if heartbeatConn then
+            heartbeatConn:Disconnect()
+            heartbeatConn = nil
+        end
+        for _, conn in ipairs(inputConns) do
+            conn:Disconnect()
+        end
+        inputConns = {}
+        if not state then
+            return
+        end
+        lastInput = tick()
+        table.insert(inputConns, UserInputService.InputBegan:Connect(resetTimer))
+        table.insert(inputConns, UserInputService.InputChanged:Connect(resetTimer))
+
+        task.spawn(function()
+            while AntiAFK.Enabled do
+                task.wait(50)
+                if AntiAFK.Enabled and tick() - lastInput >= AntiAFK.IdleThreshold then
+                    VirtualUser:CaptureController()
+                    VirtualUser:ClickButton2(Vector2.new())
+                    lastInput = tick()
+                end
+            end
+        end)
+    end
+
     local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
 
     local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
-        Title = "AntiAFKToggle",
+        Title = "Anti-AFK",
         Default = true
     })
-    AntiAFKToggle:OnChanged(function()
-        if Options.AntiAFK.value then
-            showNotif("Settings", "AntiAFK is now enabled", nil, 3)
+    AntiAFKToggle:OnChanged(function(state)
+        AntiAFK.Toggle(state)
+        if Options.AntiAFK.Value then
+            showNotif("Settings", "Anti-AFK is now enabled", nil, 3)
         end
     end)
 end
