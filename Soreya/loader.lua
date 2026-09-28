@@ -174,9 +174,9 @@ do
         Multi = false,
         Default = 1
     })
-    CheckpointsDropdown:OnChanged(function(Value)
-        if CheckpointsDropdown:GetValue() ~= nil then
-            selectedCheckpoint = CheckpointsDropdown:GetValue()
+    CheckpointsDropdown:OnChanged(function(value)
+        if value ~= nil then
+            selectedCheckpoint = value
         end
     end)
     local TeleportToCPButton = TeleportSection:AddButton("TeleportToCheckpoint", {
