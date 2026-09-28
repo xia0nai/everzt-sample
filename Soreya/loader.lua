@@ -95,11 +95,14 @@ end
 
 -- / Miscellaneous Tab / --
 do
-    local AntiAFK = {}
-    AntiAFK.IdleThreshold = 15 * 60
+    local AntiAFK = {
+        Enabled = true,
+        IdleThreshold = 15 * 60
+    }
     local lastInput = tick()
     local heartbeatConn = nil
     local inputConns = {}
+
     local function resetTimer()
         lastInput = tick()
     end
@@ -140,14 +143,8 @@ do
         Title = "Anti-AFK",
         Default = true
     })
-    AntiAFK.Enabled = Options.AntiAFK.Value == true
-    AntiAFK.Toggle(AntiAFK.Enabled)
-
     AntiAFKToggle:OnChanged(function(state)
         AntiAFK.Toggle(state)
-        if Options.AntiAFK.Value then
-            showNotif("Settings", "Anti-AFK is now enabled", nil, 3)
-        end
     end)
 end
 
