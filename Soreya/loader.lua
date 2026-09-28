@@ -180,7 +180,8 @@ do
         end
     end)
     local TeleportToCPButton = TeleportSection:AddButton({
-        Title = "Teleport to Checkpoint",
+        Title = "Teleport",
+        Description = "Teleport to selected checkpoint",
         Callback = function()
             if selectedCheckpoint then
                 TeleportTo(SavedCoords, selectedCheckpoint)
