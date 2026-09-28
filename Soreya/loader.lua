@@ -140,6 +140,7 @@ do
             return
         end
 
+        local player = Players.LocalPlayer
         local character = player.Character
         local rootPart = character and character:FindFirstChild("HumanoidRootPart")
         if rootPart then
@@ -180,8 +181,7 @@ do
         end
     end)
     local TeleportToCPButton = TeleportSection:AddButton({
-        Title = "Teleport",
-        Description = "Teleport to selected checkpoint",
+        Title = "Teleport to Checkpoint",
         Callback = function()
             if selectedCheckpoint then
                 TeleportTo(SavedCoords, selectedCheckpoint)
@@ -236,14 +236,14 @@ do
     local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
     local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
         Title = "Anti-AFK",
-        Default = true
-    })
-    AntiAFKToggle:OnChanged(function(state)
-        AntiAFK.Toggle(state)
-        if AntiAFK.Enabled then
-            showNotif("Anti-AFK", "Anti-AFK is now " .. (state and "enabled" or "disabled"), nil, 3)
+        Default = true,
+        Callback = function(state)
+            AntiAFK.Toggle(state)
+            if AntiAFK.Enabled then
+                showNotif("Anti-AFK", "Anti-AFK is now " .. (state and "enabled" or "disabled"), nil, 3)
+            end
         end
-    end)
+    })
 end
 
 -- Hand the library over to our managers
