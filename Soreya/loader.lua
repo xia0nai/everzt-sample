@@ -67,6 +67,10 @@ local Tabs = {
         Title = "Main",
         Icon = ""
     }),
+    Fishing = Window:AddTab({
+        Title = "Fishing",
+        Icon = ""
+    }),
     Settings = Window:AddTab({
         Title = "Settings",
         Icon = ""
@@ -86,6 +90,21 @@ do
     })
     CheckpointsDropdown:OnChanged(function(Value)
         showNotif("Teleport", "Teleported to: " .. Value, nil, 3)
+    end)
+end
+
+-- / Miscellaneous Tab / --
+do
+    local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
+
+    local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
+        Title = "AntiAFKToggle",
+        Default = true
+    })
+    AntiAFKToggle:OnChanged(function()
+        if Options.AntiAFK.value then
+            showNotif("Settings", "AntiAFK is now enabled", nil, 3)
+        end
     end)
 end
 
