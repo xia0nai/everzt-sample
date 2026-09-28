@@ -188,6 +188,26 @@ do
             end
         end
     })
+
+    local SpotCoresDropdown = TeleportSection:AddDropdown("SpotCores", {
+        Title = "Spot Cores",
+        Values = GetCoordinateKeys(CoreCoords),
+        Multi = false,
+        Default = 1
+    })
+    SpotCoresDropdown:OnChanged(function(value)
+        if value ~= nil then
+            selectedCoreSpot = value
+        end
+    end)
+    local TeleportToSpotButton = TeleportSection:AddButton({
+        Title = "Teleport to Spot Core",
+        Callback = function()
+            if selectedCoreSpot then
+                TeleportTo(CoreCoords, selectedCoreSpot)
+            end
+        end
+    })
 end
 
 -- / Miscellaneous Tab / --
