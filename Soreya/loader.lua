@@ -95,7 +95,15 @@ end
 
 -- / Miscellaneous Tab / --
 do
-    local AntiAFK = {Enabled = true}
+    local AntiAFK = {}
+    local success, currentState = pcall(function()
+        return Options.AntiAFK.Value
+    end)
+    if success then
+        AntiAFK.Enabled = currentState == true
+    else
+        AntiAFK.Enabled = false
+    end
     AntiAFK.IdleThreshold = 15 * 60
     local lastInput = tick()
     local heartbeatConn = nil
@@ -106,6 +114,7 @@ do
 
     function AntiAFK.Toggle(state)
         AntiAFK.Enabled = state
+        Options.AntiAFK:SetValue(state)
         if heartbeatConn then
             heartbeatConn:Disconnect()
             heartbeatConn = nil
