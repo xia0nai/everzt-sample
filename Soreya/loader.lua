@@ -95,9 +95,7 @@ end
 
 -- / Miscellaneous Tab / --
 do
-    local AntiAFK = {}
-    print("Anti AFK :", Options.AntiAFK.Value)
-    AntiAFK.Enabled = Options.AntiAFK.Value or true
+    local AntiAFK = {Enabled = true}
     AntiAFK.IdleThreshold = 15 * 60
     local lastInput = tick()
     local heartbeatConn = nil
@@ -108,7 +106,6 @@ do
 
     function AntiAFK.Toggle(state)
         AntiAFK.Enabled = state
-        Options.AntiAFK:SetValue(state)
         if heartbeatConn then
             heartbeatConn:Disconnect()
             heartbeatConn = nil
@@ -125,9 +122,9 @@ do
         table.insert(inputConns, UserInputService.InputChanged:Connect(resetTimer))
 
         task.spawn(function()
-            while Options.AntiAFK.Value do
+            while AntiAFK.Enabled do
                 task.wait(50)
-                if Options.AntiAFK.Value and tick() - lastInput >= AntiAFK.IdleThreshold then
+                if AntiAFK.Enabled and tick() - lastInput >= AntiAFK.IdleThreshold then
                     VirtualUser:CaptureController()
                     VirtualUser:ClickButton2(Vector2.new())
                     lastInput = tick()
@@ -142,6 +139,9 @@ do
         Title = "Anti-AFK",
         Default = AntiAFK.Enabled
     })
+    AntiAFK.Enabled = Options.AntiAFK.Value == true
+    AntiAFK.Toggle(AntiAFK.Enabled)
+
     AntiAFKToggle:OnChanged(function(state)
         AntiAFK.Toggle(state)
         if Options.AntiAFK.Value then
