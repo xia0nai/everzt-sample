@@ -1,14 +1,24 @@
-local VirtualInputManager = game:GetService("VirtualInputManager")
-
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
 local InterfaceManager = loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
+local games = {
+    [10547430486] = "Soreya"
+}
+local univerId = game.gameId
+local Config = {
+    HubName = "Everzt Hub",
+    HubVersion = "v0.0.1",
+    HubAuthor = "xia0nai",
+    HubFolder = "EverztHub",
+    ConfigFolder = "EverztHub/" .. games[univerId] or "Default"
+}
+
 local Window = Fluent:CreateWindow({
-    Title = "Everzt Hub",
-    SubTitle = "v0.0.1",
+    Title = Config.HubName,
+    SubTitle = Config.HubVersion,
     TabWidth = 160,
     Size = UDim2.fromOffset(480, 400),
     Acrylic = false,
@@ -23,12 +33,9 @@ local UIStroke = Instance.new("UIStroke")
 local MinimizerButton = Instance.new("ImageButton")
 
 do
-    -- Setup GUI Container
     ScreenGui.Name = "FluentToggle"
     ScreenGui.Parent = game.CoreGui
     ScreenGui.ResetOnSpawn = false
-
-    -- Setup Image Button with Roblox asset ID
     MinimizerButton.Parent = ScreenGui
     MinimizerButton.Size = UDim2.new(0, 45, 0, 45)
     MinimizerButton.Position = UDim2.new(0, 30, 0, 60)
@@ -37,19 +44,24 @@ do
     MinimizerButton.Image = "rbxassetid://139088758451411"
     MinimizerButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
     MinimizerButton.ScaleType = Enum.ScaleType.Fit
-
-    -- Smooth rounded corners
     UICorner.CornerRadius = UDim.new(0, 8)
     UICorner.Parent = MinimizerButton
-
     UIStroke.Color = Color3.fromRGB(218, 31, 61)
-    UIStroke.Thickness = 2
+    UIStroke.Thickness = 1
     UIStroke.Parent = MinimizerButton
-
-    -- Toggle UI on click using the LeftControl MinimizeKey
+    -- Toggle minimize window
     MinimizerButton.MouseButton1Click:Connect(function()
         Window:Minimize()
     end)
+end
+
+function showNotif(title, content, subcontent, duration)
+    Fluent:Notify({
+        Title = title,
+        Content = content,
+        SubContent = subcontent,
+        Duration = duration or 3
+    })
 end
 
 -- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
@@ -67,13 +79,6 @@ local Tabs = {
 local Options = Fluent.Options
 
 do
-    Fluent:Notify({
-        Title = "Notification",
-        Content = "This is a notification",
-        SubContent = "SubContent", -- Optional
-        Duration = 5 -- Set to nil to make the notification not disappear
-    })
-
     Tabs.Main:AddParagraph({
         Title = "Paragraph",
         Content = "This is a paragraph.\nSecond line!"
@@ -249,38 +254,18 @@ do
     end)
 end
 
--- Addons:
--- SaveManager (Allows you to have a configuration system)
--- InterfaceManager (Allows you to have a interface managment system)
-
 -- Hand the library over to our managers
 SaveManager:SetLibrary(Fluent)
 InterfaceManager:SetLibrary(Fluent)
 
--- Ignore keys that are used by ThemeManager.
--- (we dont want configs to save themes, do we?)
 SaveManager:IgnoreThemeSettings()
-
--- You can add indexes of elements the save manager should ignore
 SaveManager:SetIgnoreIndexes({})
-
--- use case for doing it this way:
--- a script hub could have themes in a global folder
--- and game configs in a separate folder per game
 InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
+SaveManager:SetFolder("FluentScriptHub/" .. games[univerId] or "Default")
 
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
-Window:SelectTab(1)
-
-Fluent:Notify({
-    Title = "Fluent",
-    Content = "The script has been loaded.",
-    Duration = 8
-})
-
--- You can use the SaveManager:LoadAutoloadConfig() to load a config
--- which has been marked to be one that auto loads!
+Window:SelectTab(0)
+showNotif("Everzt Hub", "Loaded successfully!", "v0.0.1", 3)
 SaveManager:LoadAutoloadConfig()
