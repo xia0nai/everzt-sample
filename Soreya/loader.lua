@@ -1,3 +1,8 @@
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local VirtualUser = game:GetService("VirtualUser")
+
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local SaveManager = loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
@@ -95,57 +100,11 @@ end
 
 -- / Miscellaneous Tab / --
 do
-    local AntiAFK = {
-        Enabled = true,
-        IdleThreshold = 15 * 60
-    }
-    local lastInput = tick()
-    local heartbeatConn = nil
-    local inputConns = {}
-
-    local function resetTimer()
-        lastInput = tick()
-    end
-
-    function AntiAFK.Toggle(state)
-        AntiAFK.Enabled = state
-        Options.AntiAFK:SetValue(state)
-        if heartbeatConn then
-            heartbeatConn:Disconnect()
-            heartbeatConn = nil
-        end
-        for _, conn in ipairs(inputConns) do
-            conn:Disconnect()
-        end
-        inputConns = {}
-        if not state then
-            return
-        end
-        lastInput = tick()
-        table.insert(inputConns, UserInputService.InputBegan:Connect(resetTimer))
-        table.insert(inputConns, UserInputService.InputChanged:Connect(resetTimer))
-
-        task.spawn(function()
-            while AntiAFK.Enabled do
-                task.wait(50)
-                if AntiAFK.Enabled and tick() - lastInput >= AntiAFK.IdleThreshold then
-                    VirtualUser:CaptureController()
-                    VirtualUser:ClickButton2(Vector2.new())
-                    lastInput = tick()
-                end
-            end
-        end)
-    end
-
     local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
-
     local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
         Title = "Anti-AFK",
         Default = true
     })
-    AntiAFKToggle:OnChanged(function(state)
-        AntiAFK.Toggle(state)
-    end)
 end
 
 -- Hand the library over to our managers
