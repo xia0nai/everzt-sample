@@ -96,14 +96,6 @@ end
 -- / Miscellaneous Tab / --
 do
     local AntiAFK = {}
-    local success, currentState = pcall(function()
-        return Options.AntiAFK.Value
-    end)
-    if success then
-        AntiAFK.Enabled = currentState == true
-    else
-        AntiAFK.Enabled = false
-    end
     AntiAFK.IdleThreshold = 15 * 60
     local lastInput = tick()
     local heartbeatConn = nil
@@ -146,7 +138,7 @@ do
 
     local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
         Title = "Anti-AFK",
-        Default = AntiAFK.Enabled
+        Default = true
     })
     AntiAFK.Enabled = Options.AntiAFK.Value == true
     AntiAFK.Toggle(AntiAFK.Enabled)
