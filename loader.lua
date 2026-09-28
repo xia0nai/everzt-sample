@@ -10,7 +10,7 @@ local Window = Fluent:CreateWindow({
     Title = "Everzt Hub",
     SubTitle = "v0.0.1",
     TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
+    Size = UDim2.fromOffset(480, 400),
     Acrylic = false,
     Theme = "Darker",
     Transparency = false,
@@ -18,8 +18,8 @@ local Window = Fluent:CreateWindow({
 })
 
 local ScreenGui = Instance.new("ScreenGui")
-local ImageButton = Instance.new("ImageButton")
 local UICorner = Instance.new("UICorner")
+local MinimizerButton = Instance.new("ImageButton")
 
 do
     -- Setup GUI Container
@@ -28,22 +28,22 @@ do
     ScreenGui.ResetOnSpawn = false
 
     -- Setup Image Button with Roblox asset ID
-    ImageButton.Parent = ScreenGui
-    ImageButton.Size = UDim2.new(0, 45, 0, 45)
-    ImageButton.Position = UDim2.new(0, 20, 0, 20)
-    ImageButton.Draggable = true
-    ImageButton.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
-    ImageButton.Image = "rbxassetid://139088758451411"
-    ImageButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
-    ImageButton.ScaleType = Enum.ScaleType.Fit
+    MinimizerButton.Parent = ScreenGui
+    MinimizerButton.Size = UDim2.new(0, 45, 0, 45)
+    MinimizerButton.Position = UDim2.new(0, 20, 0, 20)
+    MinimizerButton.Draggable = true
+    MinimizerButton.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+    MinimizerButton.Image = "rbxassetid://139088758451411"
+    MinimizerButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    MinimizerButton.ScaleType = Enum.ScaleType.Fit
 
     -- Smooth rounded corners
     UICorner.CornerRadius = UDim.new(0, 8)
-    UICorner.Parent = ImageButton
+    UICorner.Parent = MinimizerButton
 
     -- Toggle UI on click using the LeftControl MinimizeKey
-    ImageButton.MouseButton1Click:Connect(function()
-        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.LeftControl, false, game)
+    MinimizerButton.MouseButton1Click:Connect(function()
+        Window:Minimize()
     end)
 end
 
