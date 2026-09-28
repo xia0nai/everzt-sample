@@ -21,7 +21,7 @@ Sounds = game:GetService("SoundService")
 
 -- the script below is the Built-in Minimazer 
 local Minimizer = Fluent:CreateMinimizer({
-    Icon = "rbxassetid://109639117875913",
+    Icon = "rbxassetid://102785178799076",
     Size = UDim2.fromOffset(64, 64),
     Position = UDim2.new(0.101969875, 0, 0.110441767, 0),
     Corner = 12,
