@@ -105,6 +105,50 @@ do
         Title = "Anti-AFK",
         Default = true
     })
+
+    local AntiAFK = {
+        Enabled = true,
+        IdleThreshold = 15 * 60
+    }
+    local lastInput = tick()
+    local heartbeatConn = nil
+    local inputConns = {}
+
+    local function resetTimer()
+        lastInput = tick()
+    end
+
+    function AntiAFK.Toggle(state)
+        AntiAFK.Enabled = state
+        if heartbeatConn then
+            heartbeatConn:Disconnect()
+            heartbeatConn = nil
+        end
+        for _, conn in ipairs(inputConns) do
+            conn:Disconnect()
+        end
+        inputConns = {}
+        if not state then
+            return
+        end
+        lastInput = tick()
+        table.insert(inputConns, UserInputService.InputBegan:Connect(resetTimer))
+        table.insert(inputConns, UserInputService.InputChanged:Connect(resetTimer))
+
+        task.spawn(function()
+            while AntiAFK.Enabled do
+                task.wait(50)
+                if AntiAFK.Enabled and tick() - lastInput >= AntiAFK.IdleThreshold then
+                    VirtualUser:CaptureController()
+                    VirtualUser:ClickButton2(Vector2.new())
+                    lastInput = tick()
+                end
+            end
+        end)
+    end
+    AntiAFKToggle:OnChanged(function(state)
+        AntiAFK.Toggle(state)
+    end)
 end
 
 -- Hand the library over to our managers
@@ -120,4 +164,12 @@ InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
 Window:SelectTab(0)
+local loadOK, err = pcall(function()
+    SaveManager:Load("Default")
+end)
+if not loadOK then
+    local saveOK, errSave = pcall(function()
+        SaveManager:Save("Default")
+    end)
+end
 SaveManager:LoadAutoloadConfig()
