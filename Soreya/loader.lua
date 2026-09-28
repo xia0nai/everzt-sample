@@ -100,15 +100,9 @@ end
 
 -- / Miscellaneous Tab / --
 do
-    local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
-    local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
-        Title = "Anti-AFK",
-        Default = true
-    })
-
     local AntiAFK = {
-        Enabled = true,
-        IdleThreshold = 15 * 60
+        Enabled = false,
+        IdleThreshold = 900
     }
     local lastInput = tick()
     local heartbeatConn = nil
@@ -137,7 +131,7 @@ do
 
         task.spawn(function()
             while AntiAFK.Enabled do
-                task.wait(50)
+                task.wait(30)
                 if AntiAFK.Enabled and tick() - lastInput >= AntiAFK.IdleThreshold then
                     VirtualUser:CaptureController()
                     VirtualUser:ClickButton2(Vector2.new())
@@ -146,8 +140,17 @@ do
             end
         end)
     end
+
+    local MiscSection = Tabs.Settings:AddSection("Miscellaneous")
+    local AntiAFKToggle = MiscSection:AddToggle("AntiAFK", {
+        Title = "Anti-AFK",
+        Default = true
+    })
     AntiAFKToggle:OnChanged(function(state)
         AntiAFK.Toggle(state)
+        if AntiAFK.Enabled then
+            showNotif("Anti-AFK", "Anti-AFK is now " .. (state and "enabled" or "disabled"), nil, 3)
+        end
     end)
 end
 
@@ -163,13 +166,4 @@ SaveManager:SetFolder(Config.ConfigFolder)
 InterfaceManager:BuildInterfaceSection(Tabs.Settings)
 SaveManager:BuildConfigSection(Tabs.Settings)
 
-Window:SelectTab(0)
-local loadOK, err = pcall(function()
-    SaveManager:Load("Default")
-end)
-if not loadOK then
-    local saveOK, errSave = pcall(function()
-        SaveManager:Save("Default")
-    end)
-end
 SaveManager:LoadAutoloadConfig()
