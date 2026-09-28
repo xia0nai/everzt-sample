@@ -15,6 +15,36 @@ local Window = Fluent:CreateWindow({
     MinimizeKey = Enum.KeyCode.Home
 })
 
+local ScreenGui = Instance.new("ScreenGui")
+local ImageButton = Instance.new("ImageButton")
+local UICorner = Instance.new("UICorner")
+
+do
+    -- Setup GUI Container
+    ScreenGui.Name = "FluentToggle"
+    ScreenGui.Parent = game.CoreGui
+    ScreenGui.ResetOnSpawn = false
+
+    -- Setup Image Button with Roblox asset ID
+    ImageButton.Parent = ScreenGui
+    ImageButton.Size = UDim2.new(0, 45, 0, 45)
+    ImageButton.Position = UDim2.new(0, 20, 0, 20)
+    ImageButton.Draggable = true
+    ImageButton.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
+    ImageButton.Image = "rbxassetid://139088758451411"
+    ImageButton.ImageColor3 = Color3.fromRGB(255, 255, 255)
+    ImageButton.ScaleType = Enum.ScaleType.Fit
+
+    -- Smooth rounded corners
+    UICorner.CornerRadius = UDim.new(0, 8)
+    UICorner.Parent = ImageButton
+
+    -- Toggle UI on click using the LeftControl MinimizeKey
+    ImageButton.MouseButton1Click:Connect(function()
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, Enum.KeyCode.Home, false, game)
+    end)
+end
+
 -- Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
 local Tabs = {
     Main = Window:AddTab({
