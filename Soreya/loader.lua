@@ -179,7 +179,7 @@ do
             selectedCheckpoint = value
         end
     end)
-    local TeleportToCPButton = TeleportSection:AddButton("TeleportToCheckpoint", {
+    local TeleportToCPButton = TeleportSection:AddButton({
         Title = "Teleport to Checkpoint",
         Callback = function()
             if selectedCheckpoint then
