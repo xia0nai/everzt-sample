@@ -14,11 +14,12 @@ local Window = Fluent:CreateWindow({
     Acrylic = false,
     Theme = "Darker",
     Transparency = false,
-    MinimizeKey = Enum.KeyCode.LeftControl
+    MinimizeKey = nil
 })
 
 local ScreenGui = Instance.new("ScreenGui")
 local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
 local MinimizerButton = Instance.new("ImageButton")
 
 do
@@ -30,7 +31,7 @@ do
     -- Setup Image Button with Roblox asset ID
     MinimizerButton.Parent = ScreenGui
     MinimizerButton.Size = UDim2.new(0, 45, 0, 45)
-    MinimizerButton.Position = UDim2.new(0, 20, 0, 20)
+    MinimizerButton.Position = UDim2.new(0, 30, 0, 60)
     MinimizerButton.Draggable = true
     MinimizerButton.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
     MinimizerButton.Image = "rbxassetid://139088758451411"
@@ -40,6 +41,10 @@ do
     -- Smooth rounded corners
     UICorner.CornerRadius = UDim.new(0, 8)
     UICorner.Parent = MinimizerButton
+
+    UIStroke.Color = Color3.fromRGB(218, 31, 61)
+    UIStroke.Thickness = 2
+    UIStroke.Parent = MinimizerButton
 
     -- Toggle UI on click using the LeftControl MinimizeKey
     MinimizerButton.MouseButton1Click:Connect(function()
