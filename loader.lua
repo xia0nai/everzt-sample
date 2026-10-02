@@ -1,7 +1,8 @@
 local VERSION = "0.0.1"
 local HUB_NAME = "Everzt"
 local games = {
-    [10547430486] = "https://raw.githubusercontent.com/xia0nai/everzt-sample/refs/heads/main/Soreya/loader.lua"
+    [10547430486] = "https://raw.githubusercontent.com/xia0nai/everzt-sample/refs/heads/main/Soreya/loader.lua",
+    [10765737222] = "https://raw.githubusercontent.com/xia0nai/everzt-sample/refs/heads/main/Savira/loader.lua",
 }
 local universeId = game.GameId
 local placeId = game.PlaceId
