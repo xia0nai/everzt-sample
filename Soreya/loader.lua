@@ -1,5 +1,6 @@
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local UserInputService = game:GetService("UserInputService")
 local VirtualUser = game:GetService("VirtualUser")
 
@@ -10,6 +11,7 @@ local InterfaceManager = loadstring(game:HttpGet(
     "https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
 
 local univerId = game.gameId
+local player = Players.LocalPlayer
 local Config = {
     HubName = "Everzt Hub",
     HubVersion = "v0.0.1",
@@ -108,7 +110,8 @@ do
                              "Summit;-6764.0317;1321.1573;-10100.9102;-3.1416;0.0500;-3.1416"}
     local ListSpotCore = {"Spot 1;-6891.1274;1327.9509;-9796.7715;-3.1416;-1.2807;-3.1416",
                           "Spot 2;-8139.1079;1239.3344;-6196.1689;3.1416;-0.0022;-3.1416",
-                          "Spot Core;-9050.6523;1250.8180;-6508.4370;-0.0000;0.1158;0.0000"}
+                          "Spot Core;-9050.6523;1250.8180;-6508.4370;-0.0000;0.1158;0.0000",
+                          "Galatama;-7947.2422;1231.3038;-6096.4136;-0.0000;0.0682;0.0000"}
     local SavedCoords = {}
     local CoreCoords = {}
     local selectedCheckpoint = nil
@@ -140,7 +143,6 @@ do
             return
         end
 
-        local player = Players.LocalPlayer
         local character = player.Character
         local rootPart = character and character:FindFirstChild("HumanoidRootPart")
         if rootPart then
@@ -209,6 +211,18 @@ do
         end
     })
 end
+
+-- / Fishing Tab / --
+-- do
+    -- local FishingConfig = {AutoSell = false,}
+    -- game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Inventaris"):WaitForChild("AmbilSemua"):InvokeServer()
+    -- local args = {false,60}
+    -- game:GetService("Players").LocalPlayer:WaitForChild("Backpack"):WaitForChild("Withering Rod"):WaitForChild("Mechanics"):WaitForChild("Remotes"):WaitForChild("CastEvent"):FireServer(unpack(args))
+    -- local args = {true}
+    -- game:GetService("Players").LocalPlayer:WaitForChild("Backpack"):WaitForChild("Withering Rod"):WaitForChild("Mechanics"):WaitForChild("Remotes"):WaitForChild("MiniGame"):FireServer(unpack(args))
+
+    -- game:GetService("ReplicatedStorage"):WaitForChild("Remote"):WaitForChild("Mancing"):WaitForChild("JualSemua"):InvokeServer()
+-- end
 
 -- / Miscellaneous Tab / --
 do
